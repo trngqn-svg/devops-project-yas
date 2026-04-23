@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk-25'
+        maven 'Maven-3'
+    }
+
     stages {
         stage('Services CI') {
             parallel {
