@@ -4,16 +4,7 @@ pipeline {
     stages {
         stage('Services CI') {
             parallel {
-                stage('Notify GitHub - Pending') {
-                    steps {
-                        githubNotify(
-                            context: 'Jenkins CI',
-                            description: 'Build in progress...',
-                            status: 'PENDING'
-                        )
-                    }
-                }
-              
+                
                 stage('common-library') {
                     when { changeset "common-library/**" }
                     stages {
@@ -278,32 +269,10 @@ pipeline {
     }
     post {
         success {
-            githubNotify(
-                context: 'Jenkins CI',
-                description: 'Build finished successfully',
-                status: 'SUCCESS'
-            )
+            echo 'CI PASSED'
         }
         failure {
-            githubNotify(
-                context: 'Jenkins CI',
-                description: 'Build failed',
-                status: 'FAILURE'
-            )
-        }
-        unstable {
-            githubNotify(
-                context: 'Jenkins CI',
-                description: 'Build is unstable',
-                status: 'FAILURE'
-            )
-        }
-        aborted {
-            githubNotify(
-                context: 'Jenkins CI',
-                description: 'Build was aborted',
-                status: 'ERROR'
-            )
+            echo 'CI FAILED'
         }
     }
 }
