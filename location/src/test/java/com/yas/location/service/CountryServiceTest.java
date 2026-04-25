@@ -178,4 +178,17 @@ public class CountryServiceTest {
         assertEquals(2, countryListGetVm.totalElements());
         assertEquals(1, countryListGetVm.totalPages());
     }
+    
+    @Test
+    void getCountries_Pagination_PageZero_Success() {
+        generateTestData();
+        int pageNo = 0;
+        int pageSize = 2;
+        CountryListGetVm countryListGetVm = countryService.getPageableCountries(pageNo, pageSize);
+        assertNotNull(countryListGetVm);
+        assertEquals(countryListGetVm.pageNo(), pageNo);
+        assertEquals(countryListGetVm.pageSize(), pageSize);
+        assertEquals(2, countryListGetVm.countryContent().size());
+        assertEquals(2, countryListGetVm.totalElements());
+    }
 }
