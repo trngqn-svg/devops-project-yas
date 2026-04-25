@@ -48,12 +48,14 @@ class CustomerServiceTest {
     void setUp() {
         Keycloak keycloak = mock(Keycloak.class);
         KeycloakPropsConfig keycloakPropsConfig = mock(KeycloakPropsConfig.class);
+
         realmResource = mock(RealmResource.class);
-        when(keycloakPropsConfig.getRealm()).thenReturn(REALM_NAME);
-        when(keycloak.realm(REALM_NAME)).thenReturn(realmResource);
         usersResource = mock(UsersResource.class);
+
+        when(keycloakPropsConfig.getRealm()).thenReturn(REALM_NAME);
+        lenient().when(keycloak.realm(REALM_NAME)).thenReturn(realmResource);
+        lenient().when(realmResource.users()).thenReturn(usersResource);
         customerService = new CustomerService(keycloak, keycloakPropsConfig);
-        when(realmResource.users()).thenReturn(usersResource);
     }
 
     private List<UserRepresentation> getUserRepresentations() {
