@@ -82,9 +82,7 @@ public class CartItemService {
             });
         }
 
-        if (cartItemsToDelete != null && !cartItemsToDelete.isEmpty()) {
-            cartItemRepository.deleteAll(cartItemsToDelete);
-        }
+        cartItemRepository.deleteAll(cartItemsToDelete);
         List<CartItem> updatedCartItems = cartItemRepository.saveAll(cartItemsToAdjust);
 
         return cartItemMapper.toGetVms(updatedCartItems);
