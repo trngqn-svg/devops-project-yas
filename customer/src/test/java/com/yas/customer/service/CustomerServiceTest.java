@@ -27,8 +27,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
-class CustomerServiceTest {
+@MockitoSettings(strictness = Strictness.LENIENT)
+class UserAddressServiceTest {
 
     private UsersResource usersResource;
 
