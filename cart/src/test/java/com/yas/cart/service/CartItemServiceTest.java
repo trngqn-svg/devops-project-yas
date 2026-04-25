@@ -258,7 +258,7 @@ class CartItemServiceTest {
 
             List<CartItemGetVm> cartItemGetVms = cartItemService.deleteOrAdjustCartItem(cartItemDeleteVms);
 
-            verify(cartItemRepository).deleteAll(Líst.of());
+            verify(cartItemRepository).deleteAll(List.of());
             verify(cartItemRepository).saveAll(List.of());
             assertEquals(0, cartItemGetVms.size());
         }
