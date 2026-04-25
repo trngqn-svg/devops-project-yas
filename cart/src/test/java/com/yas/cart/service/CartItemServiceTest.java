@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -259,8 +258,8 @@ class CartItemServiceTest {
 
             List<CartItemGetVm> cartItemGetVms = cartItemService.deleteOrAdjustCartItem(cartItemDeleteVms);
 
-            verify(cartItemRepository, never()).deleteAll(any());
-            verify(cartItemRepository, never()).saveAll(any());
+            verify(cartItemRepository).deleteAll(Líst.of());
+            verify(cartItemRepository).saveAll(List.of());
             assertEquals(0, cartItemGetVms.size());
         }
     }
