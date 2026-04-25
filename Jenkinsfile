@@ -15,8 +15,9 @@ pipeline {
                     stages {
                         stage('common-library - Test') {
                             steps { sh 'mvn -B clean test -pl common-library -am' }
-                            post { always { junit testResults: 'common-library/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'common-library/target/jacoco.exec' } }
+                            post { always { junit testResults: 'common-library/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'common-library/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('common-library - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl common-library -am' }
                         }
@@ -28,8 +29,9 @@ pipeline {
                     stages {
                         stage('backoffice-bff - Test') {
                             steps { sh 'mvn -B clean test -pl backoffice-bff -am' }
-                            post { always { junit testResults: 'backoffice-bff/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'backoffice-bff/target/jacoco.exec' } }
+                            post { always { junit testResults: 'backoffice-bff/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'backoffice-bff/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('backoffice-bff - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl backoffice-bff -am' }
                         }
@@ -41,8 +43,9 @@ pipeline {
                     stages {
                         stage('cart - Test') {
                             steps { sh 'mvn -B clean test -pl cart -am' }
-                            post { always { junit testResults: 'cart/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'cart/target/jacoco.exec' } }
+                            post { always { junit testResults: 'cart/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'cart/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('cart - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl cart -am' }
                         }
@@ -54,8 +57,9 @@ pipeline {
                     stages {
                         stage('customer - Test') {
                             steps { sh 'mvn -B clean test -pl customer -am' }
-                            post { always { junit testResults: 'customer/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'customer/target/jacoco.exec' } }
+                            post { always { junit testResults: 'customer/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'customer/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('customer - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl customer -am' }
                         }
@@ -67,8 +71,9 @@ pipeline {
                     stages {
                         stage('inventory - Test') {
                             steps { sh 'mvn -B clean test -pl inventory -am' }
-                            post { always { junit testResults: 'inventory/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'inventory/target/jacoco.exec' } }
+                            post { always { junit testResults: 'inventory/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'inventory/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('inventory - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl inventory -am' }
                         }
@@ -80,8 +85,9 @@ pipeline {
                     stages {
                         stage('location - Test') {
                             steps { sh 'mvn -B clean test -pl location -am' }
-                            post { always { junit testResults: 'location/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'location/target/jacoco.exec' } }
+                            post { always { junit testResults: 'location/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'location/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('location - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl location -am' }
                         }
@@ -93,8 +99,9 @@ pipeline {
                     stages {
                         stage('media - Test') {
                             steps { sh 'mvn -B clean test -pl media -am' }
-                            post { always { junit testResults: 'media/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'media/target/jacoco.exec' } }
+                            post { always { junit testResults: 'media/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'media/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('media - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl media -am' }
                         }
@@ -106,8 +113,9 @@ pipeline {
                     stages {
                         stage('order - Test') {
                             steps { sh 'mvn -B clean test -pl order -am' }
-                            post { always { junit testResults: 'order/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'order/target/jacoco.exec' } }
+                            post { always { junit testResults: 'order/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'order/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('order - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl order -am' }
                         }
@@ -119,8 +127,9 @@ pipeline {
                     stages {
                         stage('payment-paypal - Test') {
                             steps { sh 'mvn -B clean test -pl payment-paypal -am' }
-                            post { always { junit testResults: 'payment-paypal/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'payment-paypal/target/jacoco.exec' } }
+                            post { always { junit testResults: 'payment-paypal/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'payment-paypal/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('payment-paypal - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl payment-paypal -am' }
                         }
@@ -132,8 +141,9 @@ pipeline {
                     stages {
                         stage('payment - Test') {
                             steps { sh 'mvn -B clean test -pl payment -am' }
-                            post { always { junit testResults: 'payment/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'payment/target/jacoco.exec' } }
+                            post { always { junit testResults: 'payment/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'payment/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('payment - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl payment -am' }
                         }
@@ -145,8 +155,9 @@ pipeline {
                     stages {
                         stage('product - Test') {
                             steps { sh 'mvn -B clean test -pl product -am' }
-                            post { always { junit testResults: 'product/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'product/target/jacoco.exec' } }
+                            post { always { junit testResults: 'product/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'product/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('product - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl product -am' }
                         }
@@ -158,8 +169,9 @@ pipeline {
                     stages {
                         stage('promotion - Test') {
                             steps { sh 'mvn -B clean test -pl promotion -am' }
-                            post { always { junit testResults: 'promotion/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'promotion/target/jacoco.exec' } }
+                            post { always { junit testResults: 'promotion/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'promotion/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('promotion - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl promotion -am' }
                         }
@@ -171,8 +183,9 @@ pipeline {
                     stages {
                         stage('rating - Test') {
                             steps { sh 'mvn -B clean test -pl rating -am' }
-                            post { always { junit testResults: 'rating/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'rating/target/jacoco.exec' } }
+                            post { always { junit testResults: 'rating/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'rating/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('rating - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl rating -am' }
                         }
@@ -184,8 +197,9 @@ pipeline {
                     stages {
                         stage('search - Test') {
                             steps { sh 'mvn -B clean test -pl search -am' }
-                            post { always { junit testResults: 'search/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'search/target/jacoco.exec' } }
+                            post { always { junit testResults: 'search/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'search/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('search - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl search -am' }
                         }
@@ -197,8 +211,9 @@ pipeline {
                     stages {
                         stage('storefront-bff - Test') {
                             steps { sh 'mvn -B clean test -pl storefront-bff -am' }
-                            post { always { junit testResults: 'storefront-bff/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'storefront-bff/target/jacoco.exec' } }
+                            post { always { junit testResults: 'storefront-bff/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'storefront-bff/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('storefront-bff - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl storefront-bff -am' }
                         }
@@ -210,8 +225,9 @@ pipeline {
                     stages {
                         stage('tax - Test') {
                             steps { sh 'mvn -B clean test -pl tax -am' }
-                            post { always { junit testResults: 'tax/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'tax/target/jacoco.exec' } }
+                            post { always { junit testResults: 'tax/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'tax/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('tax - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl tax -am' }
                         }
@@ -223,8 +239,9 @@ pipeline {
                     stages {
                         stage('webhook - Test') {
                             steps { sh 'mvn -B clean test -pl webhook -am' }
-                            post { always { junit testResults: 'webhook/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'webhook/target/jacoco.exec' } }
+                            post { always { junit testResults: 'webhook/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'webhook/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('webhook - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl webhook -am' }
                         }
@@ -236,8 +253,9 @@ pipeline {
                     stages {
                         stage('sampledata - Test') {
                             steps { sh 'mvn -B clean test -pl sampledata -am' }
-                            post { always { junit testResults: 'sampledata/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'sampledata/target/jacoco.exec' } }
+                            post { always { junit testResults: 'sampledata/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'sampledata/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('sampledata - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl sampledata -am' }
                         }
@@ -249,8 +267,9 @@ pipeline {
                     stages {
                         stage('recommendation - Test') {
                             steps { sh 'mvn -B clean test -pl recommendation -am' }
-                            post { always { junit testResults: 'recommendation/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'recommendation/target/jacoco.exec' } }
+                            post { always { junit testResults: 'recommendation/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'recommendation/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('recommendation - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl recommendation -am' }
                         }
@@ -262,8 +281,9 @@ pipeline {
                     stages {
                         stage('delivery - Test') {
                             steps { sh 'mvn -B clean test -pl delivery -am' }
-                            post { always { junit testResults: 'delivery/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'delivery/target/jacoco.exec' } }
+                            post { always { junit testResults: 'delivery/target/surefire-reports/*.xml', allowEmptyResults: true; jacoco execPattern: 'delivery/target/jacoco.exec', changeBuildStatus: true, minimumInstructionCoverage: '70', minimumBranchCoverage: '70', minimumLineCoverage: '70', minimumComplexityCoverage: '70', minimumMethodCoverage: '70', minimumClassCoverage: '70' } }
                         }
+
                         stage('delivery - Build') {
                             steps { sh 'mvn -B clean package -DskipTests -pl delivery -am' }
                         }
