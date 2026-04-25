@@ -1,32 +1,29 @@
 package com.yas.backofficebff.controller;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockOAuth2Login;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oauth2Login;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.test.web.reactive.server.WebTestClient;
-import org.mockito.Mockito;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
 
-@WebFluxTest(controllers = AuthenticationController.class)
+@WebMvcTest(AuthenticationController.class)
 class AuthenticationControllerTest {
 
     @Autowired
-    private WebTestClient webTestClient;
+    private MockMvc mockMvc;
 
     @Test
-    void testUser_whenAuthenticated_returnsUser() {
-        OAuth2User principal = Mockito.mock(OAuth2User.class);
-        when(principal.getAttribute("preferred_username")).thenReturn("admin");
-
-        webTestClient
-            .mutateWith(mockOAuth2Login().oauth2User(principal))
-            .get().uri("/authentication/user")
-            .exchange()
-            .expectStatus().isOk()
-            .expectBody()
-            .jsonPath("$.username").isEqualTo("admin");
+    void testUser_whenAuthenticated_returnsUser() throws Exception {
+        mockMvc.perform(
+                get("/authentication/user")
+                    .with(oauth2Login().attributes(attrs -> {
+                        attrs.put("preferred_username", "admin");
+                    }))
+            )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.username").value("admin"));
     }
 }
