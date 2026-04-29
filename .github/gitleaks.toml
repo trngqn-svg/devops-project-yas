@@ -1,0 +1,6 @@
+title = "Gitleaks Configuration"
+description = "Configuration for Gitleaks secret detection"
+
+[extend]
+useDefault = true
+EOF
