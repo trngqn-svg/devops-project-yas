@@ -691,15 +691,16 @@ pipeline {
                 withSonarQubeEnv('sonarqube-server') {
                     sh '''
                         docker run --rm \
-                          -e SONAR_HOST_URL=${SONAR_CONFIG_URL} \
-                          -e SONAR_TOKEN=${SONAR_TOKEN} \
+                          -e SONAR_HOST_URL=$SONAR_HOST_URL \
+                          -e SONAR_TOKEN=$SONAR_TOKEN \
                           -v $(pwd):/usr/src \
                           -w /usr/src \
                           eclipse-temurin:25-jdk-noble \
-                          /bin/bash -c "apt-get update && apt-get install -y maven && mvn sonar:sonar \
+                          /bin/bash -c "apt-get update && apt-get install -y maven && \
+                            mvn sonar:sonar \
                               -Dsonar.projectKey=my-project \
-                              -Dsonar.host.url=${SONAR_CONFIG_URL} \
-                              -Dsonar.login=${SONAR_TOKEN} \
+                              -Dsonar.host.url=$SONAR_HOST_URL \
+                              -Dsonar.login=$SONAR_TOKEN \
                               -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco/jacoco.xml"
                     '''
                 }
