@@ -21,7 +21,9 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high
+          command: test
+          args: --severity-threshold=high --detection-depth=4
+
 
       - name: Upload Snyk Report
         if: always()
