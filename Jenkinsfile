@@ -684,6 +684,29 @@ pipeline {
         }
 
         stage('Code Quality - SonarQube') {
+            when {
+                anyOf {
+                    changeset "common-library/**"
+                    changeset "backoffice-bff/**"
+                    changeset "cart/**"
+                    changeset "customer/**"
+                    changeset "inventory/**"
+                    changeset "location/**"
+                    changeset "media/**"
+                    changeset "order/**"
+                    changeset "payment/**"
+                    changeset "product/**"
+                    changeset "promotion/**"
+                    changeset "rating/**"
+                    changeset "search/**"
+                    changeset "storefront-bff/**"
+                    changeset "tax/**"
+                    changeset "webhook/**"
+                    changeset "recommendation/**"
+                    changeset "delivery/**"
+                }
+            }
+            
             environment {
                 SONAR_TOKEN = credentials('sonarqube')
             }
