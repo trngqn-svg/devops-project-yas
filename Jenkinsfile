@@ -721,6 +721,7 @@ pipeline {
             }
         }
     }
+    
     post {
         success {
             echo 'CI PASSED'
