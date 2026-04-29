@@ -1,7 +1,9 @@
 package com.yas.media;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.yas.media.config.FilesystemConfig;
@@ -107,5 +109,21 @@ class FileSystemRepositoryTest {
         assertThrows(IllegalStateException.class, () -> fileSystemRepository.getFile(filePathStr));
     }
 
+    @Test
+    void testPersistFile_Success() throws IOException {
+        String filename = "test-file.png";
+        byte[] content = "test-content".getBytes();
+
+        File directory = new File(TEST_URL);
+        directory.mkdirs();
+        String absoluteDirectoryPath = directory.getAbsolutePath();
+        when(filesystemConfig.getDirectory()).thenReturn(absoluteDirectoryPath);
+
+        String savedPath = fileSystemRepository.persistFile(filename, content);
+
+        assertNotNull(savedPath);
+        assertTrue(Files.exists(Paths.get(savedPath)));
+        assertArrayEquals(content, Files.readAllBytes(Paths.get(savedPath)));
+    }
 }
 
