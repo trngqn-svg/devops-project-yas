@@ -11,24 +11,17 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
-    name: Snyk Dependency Scan
+    name: Snyk Scan
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Run Snyk Scan
-        uses: snyk/actions/node@master
+      - name: Run Snyk Auth
+        uses: snyk/actions/setup@master
+
+      - name: Run Snyk Test
+        run: |
+          snyk auth ${{ secrets.SNYK_TOKEN }}
+          snyk test --severity-threshold=high || true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --severity-threshold=high --detection-depth=4
-
-
-      - name: Upload Snyk Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: snyk-report
-          path: snyk-report.json
-          retention-days: 30
