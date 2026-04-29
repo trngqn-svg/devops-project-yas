@@ -695,7 +695,7 @@ pipeline {
                           -e SONAR_TOKEN=$SONAR_TOKEN \
                           -v $(pwd):/usr/src \
                           -w /usr/src \
-                          maven:3.9.9-eclipse-temurin-21 \
+                          maven:3.9.9-eclipse-temurin-25-noble \
                           mvn clean verify sonar:sonar \
                             -Dsonar.projectKey=my-project \
                             -Dsonar.host.url=$SONAR_HOST_URL \
