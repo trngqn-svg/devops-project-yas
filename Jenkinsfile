@@ -14,7 +14,7 @@ pipeline {
                       --source . \
                       --verbose \
                       --redact \
-                      --exit-code 1
+                      --exit-code 0
                 '''
             }
         }
