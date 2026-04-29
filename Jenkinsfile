@@ -696,10 +696,11 @@ pipeline {
                           -v $(pwd):/usr/src \
                           -w /usr/src \
                           eclipse-temurin:25-jdk-noble \
-                          /bin/bash -c "apt-get update && apt-get install -y maven && mvn clean verify sonar:sonar \
-                            -Dsonar.projectKey=my-project \
-                            -Dsonar.host.url=${SONAR_CONFIG_URL} \
-                            -Dsonar.login=${SONAR_TOKEN}"
+                          /bin/bash -c "apt-get update && apt-get install -y maven && mvn sonar:sonar \
+                              -Dsonar.projectKey=my-project \
+                              -Dsonar.host.url=${SONAR_CONFIG_URL} \
+                              -Dsonar.login=${SONAR_TOKEN} \
+                              -Dsonar.coverage.jacoco.xmlReportPaths=**/target/site/jacoco/jacoco.xml"
                     '''
                 }
             }
