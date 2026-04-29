@@ -691,15 +691,15 @@ pipeline {
                 withSonarQubeEnv('sonarqube-server') {
                     sh '''
                         docker run --rm \
-                          -e SONAR_HOST_URL=$SONAR_HOST_URL \
-                          -e SONAR_TOKEN=$SONAR_TOKEN \
+                          -e SONAR_HOST_URL=${SONAR_CONFIG_URL} \
+                          -e SONAR_TOKEN=${SONAR_TOKEN} \
                           -v $(pwd):/usr/src \
                           -w /usr/src \
-                          maven:3.9.9-eclipse-temurin-25-noble \
-                          mvn clean verify sonar:sonar \
+                          eclipse-temurin:25-jdk-noble \
+                          /bin/bash -c "apt-get update && apt-get install -y maven && mvn clean verify sonar:sonar \
                             -Dsonar.projectKey=my-project \
-                            -Dsonar.host.url=$SONAR_HOST_URL \
-                            -Dsonar.login=$SONAR_TOKEN
+                            -Dsonar.host.url=${SONAR_CONFIG_URL} \
+                            -Dsonar.login=${SONAR_TOKEN}"
                     '''
                 }
             }
