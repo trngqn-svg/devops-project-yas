@@ -2,6 +2,7 @@ package com.yas.tax.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.instancio.Select.field;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.lenient;
 
 import com.yas.tax.model.TaxClass;
@@ -45,5 +46,31 @@ public class TaxServiceTest {
         List<TaxRateVm> result = taxRateService.findAll();
         // assert
         assertThat(result).hasSize(1).contains(TaxRateVm.fromModel(taxRate));
+    }
+    
+    @Test
+    void testFindById_NotFound_ThrowsNotFoundException() {
+        lenient().when(taxRateRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+        assertThrows(com.yas.commonlibrary.exception.NotFoundException.class, () -> taxRateService.findById(1L));
+    }
+
+    @Test
+    void testDelete_NotFound_ThrowsNotFoundException() {
+        lenient().when(taxRateRepository.existsById(1L)).thenReturn(false);
+        assertThrows(com.yas.commonlibrary.exception.NotFoundException.class, () -> taxRateService.delete(1L));
+    }
+
+    @Test
+    void testGetTaxPercent_ReturnsValue() {
+        lenient().when(taxRateRepository.getTaxPercent(1L, 1L, "123", 1L)).thenReturn(10.0);
+        double result = taxRateService.getTaxPercent(1L, 1L, 1L, "123");
+        assertThat(result).isEqualTo(10.0);
+    }
+
+    @Test
+    void testGetTaxPercent_ReturnsZeroWhenNull() {
+        lenient().when(taxRateRepository.getTaxPercent(1L, 1L, "123", 1L)).thenReturn(null);
+        double result = taxRateService.getTaxPercent(1L, 1L, 1L, "123");
+        assertThat(result).isEqualTo(0);
     }
 }
