@@ -732,7 +732,7 @@ pipeline {
                   -v $(pwd):/app \
                   -w /app \
                   snyk/snyk:docker \
-                  snyk test --all-sub-projects || true
+                  snyk test --all-projects || true
                 '''
             }
         }
