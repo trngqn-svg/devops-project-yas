@@ -203,5 +203,4 @@ class PaypalServiceTest {
         PaypalCapturePaymentResponse result = paypalService.capturePayment(paypalCapturePaymentRequest);
         assertEquals("error message", result.failureMessage());
     }
-
 }
