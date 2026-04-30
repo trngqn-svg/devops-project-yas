@@ -143,3 +143,21 @@ class WebhookServiceTest {
         assertThat(result).isEqualTo(webhookDetailVm);
         verify(webhookRepository).save(webhook);
     }
+
+    @Test
+    void test_update_WhenIdExists_ShouldSuccess() {
+        Long id = 1L;
+        WebhookPostVm webhookPostVm = new WebhookPostVm();
+        Webhook existedWebhook = new Webhook();
+        existedWebhook.setWebhookEvents(List.of());
+        Webhook updatedWebhook = new Webhook();
+
+        when(webhookRepository.findById(id)).thenReturn(Optional.of(existedWebhook));
+        when(webhookMapper.toUpdatedWebhook(existedWebhook, webhookPostVm)).thenReturn(updatedWebhook);
+
+        webhookService.update(webhookPostVm, id);
+
+        verify(webhookRepository).save(updatedWebhook);
+        verify(webhookEventRepository).deleteAll(any());
+    }
+}
