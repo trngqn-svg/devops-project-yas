@@ -20,7 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import org.mockito.ArgumentCaptor;
 
 class PaypalServiceTest {
 
@@ -67,6 +69,37 @@ class PaypalServiceTest {
         assertEquals("success", result.status());
         assertEquals("ORDER-123456789", result.paymentId());
         assertEquals("http://redirect.url", result.redirectUrl());
+    }
+
+    @Test
+    void testCreatePayment_whenPriceExceedsMax_capPriceAtMax() throws IOException {
+        List<LinkDescription> linkDescriptions = new ArrayList<>();
+        LinkDescription linkDescription = new LinkDescription();
+        linkDescription.rel("approve");
+        linkDescription.href("http://redirect.url");
+        linkDescriptions.add(linkDescription);
+
+        Order order = new Order()
+            .id("ORDER-MAX")
+            .links(linkDescriptions);
+
+        HttpResponse mockResponse = mock(HttpResponse.class);
+        when(payPalHttpClient.execute(any(OrdersCreateRequest.class))).thenReturn(mockResponse);
+        when(mockResponse.result()).thenReturn(order);
+
+        // Price > 1000 should be capped
+        PaypalCreatePaymentRequest createPaymentRequest = new PaypalCreatePaymentRequest(
+                BigDecimal.valueOf(5000), "test-checkout-id", "PAYPAL", paymentSettings);
+        PaypalCreatePaymentResponse result = paypalService.createPayment(createPaymentRequest);
+
+        assertEquals("success", result.status());
+        
+        ArgumentCaptor<OrdersCreateRequest> requestCaptor = ArgumentCaptor.forClass(OrdersCreateRequest.class);
+        verify(payPalHttpClient).execute(requestCaptor.capture());
+        OrdersCreateRequest capturedRequest = requestCaptor.getValue();
+        OrderRequest body = (OrderRequest) capturedRequest.requestBody();
+        String capturedValue = body.purchaseUnits().get(0).amountWithBreakdown().value();
+        assertEquals("1000", capturedValue);
     }
 
     @Test
