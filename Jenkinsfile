@@ -720,6 +720,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
         
         stage('Security - Snyk') {
             environment {
@@ -740,6 +746,7 @@ pipeline {
             }
         }
     }
+    
     post {
         success {
             echo 'CI PASSED'
