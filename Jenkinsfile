@@ -720,13 +720,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-        }
         
         stage('Security - Snyk') {
             environment {
@@ -734,15 +727,12 @@ pipeline {
             }
             steps {
                 sh '''
-                mvn -DskipTests clean install
-                
                 docker run --rm \
                   -e SNYK_TOKEN=$SNYK_TOKEN \
                   -v $(pwd):/app \
-                  -v $HOME/.m2:/root/.m2 \
                   -w /app \
                   snyk/snyk:docker \
-                  snyk test || true
+                  snyk test --all-sub-projects || true
                 '''
             }
         }
