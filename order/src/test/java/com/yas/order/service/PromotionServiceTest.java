@@ -13,6 +13,7 @@ import java.util.List;
 
 import static com.yas.order.utils.SecurityContextUtils.setUpSecurityContext;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -52,6 +53,12 @@ class PromotionServiceTest {
         when(requestBodyUriSpec.retrieve()).thenReturn(responseSpec);
 
         assertDoesNotThrow(() -> promotionService.updateUsagePromotion(promotionUsageVms));
+    }
+
+    @Test
+    void testHandleBodilessFallback_shouldThrowException() {
+        Throwable throwable = new RuntimeException("Test exception");
+        assertThrows(RuntimeException.class, () -> promotionService.handleBodilessFallback(throwable));
     }
 
     private static @NotNull List<PromotionUsageVm> getPromotionUsageVms() {

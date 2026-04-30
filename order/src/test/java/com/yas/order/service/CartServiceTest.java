@@ -2,6 +2,7 @@ package com.yas.order.service;
 
 import static com.yas.order.utils.SecurityContextUtils.setUpSecurityContext;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -63,6 +64,12 @@ class CartServiceTest {
         when(requestBodyUriSpec.retrieve()).thenReturn(responseSpec);
 
         assertDoesNotThrow(() -> cartService.deleteCartItems(orderVm));
+    }
+
+    @Test
+    void testHandleBodilessFallback_shouldThrowException() {
+        Throwable throwable = new RuntimeException("Test exception");
+        assertThrows(RuntimeException.class, () -> cartService.handleBodilessFallback(throwable));
     }
 
     private static @NotNull OrderVm getOrderVm() {
