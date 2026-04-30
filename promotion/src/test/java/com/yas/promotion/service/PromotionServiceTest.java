@@ -13,6 +13,7 @@ import com.yas.promotion.model.enumeration.ApplyTo;
 import com.yas.promotion.model.enumeration.DiscountType;
 import com.yas.promotion.model.enumeration.UsageType;
 import com.yas.promotion.repository.PromotionRepository;
+import com.yas.promotion.repository.PromotionUsageRepository;
 import com.yas.promotion.utils.Constants;
 import com.yas.promotion.viewmodel.ProductVm;
 import com.yas.promotion.viewmodel.PromotionDetailVm;
@@ -39,6 +40,8 @@ class PromotionServiceTest {
     private PromotionRepository promotionRepository;
     @MockitoBean
     private ProductService productService;
+    @MockitoBean
+    private PromotionUsageRepository promotionUsageRepository;
     @Autowired
     private PromotionService promotionService;
 
@@ -331,6 +334,21 @@ class PromotionServiceTest {
         assertEquals(1L, result.productId());
         assertEquals(DiscountType.FIXED, result.discountType());
         assertEquals(200L, result.discountValue().longValue());
+    }
+
+    @Test
+    void deletePromotion_WhenInUse_ThenBadRequestExceptionThrown() {
+        Long id = 1L;
+        Mockito.when(promotionUsageRepository.existsByPromotionId(id)).thenReturn(true);
+        assertThrows(BadRequestException.class, () -> promotionService.deletePromotion(id));
+    }
+
+    @Test
+    void deletePromotion_WhenSuccess() {
+        Long id = 99L;
+        Mockito.when(promotionUsageRepository.existsByPromotionId(id)).thenReturn(false);
+        promotionService.deletePromotion(id);
+        Mockito.verify(promotionRepository).deleteById(id);
     }
 
     private List<ProductVm> createProductVms() {
