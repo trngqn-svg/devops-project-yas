@@ -2,6 +2,7 @@ package com.yas.payment.service;
 
 import static com.yas.payment.util.SecurityContextUtils.setUpSecurityContext;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -107,5 +108,15 @@ class OrderServiceTest {
         assertThat(result.orderStatus()).isEqualTo("COMPLETED");
         assertThat(result.paymentId()).isEqualTo(78910L);
         assertThat(result.paymentStatus()).isEqualTo("SUCCESS");
+    }
+
+    @Test
+    void updateCheckoutStatus_fallback_throwsException() {
+        assertThrows(RuntimeException.class, () -> orderService.handleLongFallback(new RuntimeException()));
+    }
+
+    @Test
+    void updateOrderStatus_fallback_throwsException() {
+        assertThrows(RuntimeException.class, () -> orderService.handlePaymentOrderStatusFallback(new RuntimeException()));
     }
 }

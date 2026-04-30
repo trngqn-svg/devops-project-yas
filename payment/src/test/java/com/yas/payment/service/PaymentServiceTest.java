@@ -1,5 +1,14 @@
 package com.yas.payment.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.yas.payment.model.CapturedPayment;
 import com.yas.payment.model.InitiatedPayment;
 import com.yas.payment.model.Payment;
@@ -7,22 +16,17 @@ import com.yas.payment.model.enumeration.PaymentMethod;
 import com.yas.payment.model.enumeration.PaymentStatus;
 import com.yas.payment.repository.PaymentRepository;
 import com.yas.payment.service.provider.handler.PaymentHandler;
-import com.yas.payment.service.provider.handler.PaypalHandler;
-import com.yas.payment.viewmodel.*;
+import com.yas.payment.viewmodel.CapturePaymentRequestVm;
+import com.yas.payment.viewmodel.CapturePaymentResponseVm;
+import com.yas.payment.viewmodel.InitPaymentRequestVm;
+import com.yas.payment.viewmodel.InitPaymentResponseVm;
+import com.yas.payment.viewmodel.PaymentOrderStatusVm;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 class PaymentServiceTest {
     private PaymentRepository paymentRepository;
@@ -124,4 +128,10 @@ class PaymentServiceTest {
         assertEquals(capturedPayment.getFailureMessage(), responseVm.failureMessage());
     }
 
+    @Test
+    void initPayment_InvalidProvider_ThrowsException() {
+        InitPaymentRequestVm initPaymentRequestVm = InitPaymentRequestVm.builder()
+                .paymentMethod("INVALID_PROVIDER").build();
+        assertThrows(IllegalArgumentException.class, () -> paymentService.initPayment(initPaymentRequestVm));
+    }
 }
